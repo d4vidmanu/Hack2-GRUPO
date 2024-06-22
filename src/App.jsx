@@ -7,6 +7,7 @@ import {BrowserRouter as Router,
 import Login from './components/Login'
 import Register from './components/Register'
 import Product from './components/Product'
+import ItemsPage from "./pages/ItemsPage.jsx";
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path='/register' element={<Register/>}/>
           <Route path='/admin' element={<Register/>}/>
           <Route path= '/products' element={<Product/>}/>
+          <Route path= '/items' element={<ItemsPage/>}/>
         </Routes>
       </Router>
     </>

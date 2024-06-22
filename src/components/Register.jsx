@@ -37,9 +37,9 @@ const Register = () => {
 
             // Redirigir según el rol
             if (formData.role === 'admin') {
-                navigate('/admin');
+                navigate('/items');
             } else if (formData.role === 'cliente') {
-                navigate('/products');
+                navigate('/items');
             }
 
             console.log(response.token);

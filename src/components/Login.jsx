@@ -5,6 +5,7 @@ import { fetchLogin } from "../services/api";
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -15,10 +16,10 @@ const Login = () => {
             localStorage.setItem('token', response.token);
 
             // Redirigir según el rol
-            if (formData.role === 'admin') {
-                navigate('/admin');
-            } else if (formData.role === 'cliente') {
-                navigate('/products');
+            if (response.role === 'admin') {
+                navigate('/items');
+            } else if (response.role === 'cliente') {
+                navigate('/items');
             }
 
             console.log(response.token);
@@ -30,6 +31,7 @@ const Login = () => {
     return (
         <>
             <h1>Login</h1>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="username">Username</label>
@@ -43,7 +45,7 @@ const Login = () => {
                         <input onChange={(e) => (setPassword(e.target.value))} type="password" id="password"></input>
                     </div>
                 </div>
-                <button>Submit</button>
+                <button type="submit">Submit</button>
             </form>
         </>
     )
