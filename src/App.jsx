@@ -1,13 +1,15 @@
+// src/App.jsx
 import React from 'react';
-import ItemList from "./components/ItemList.jsx";
-import './index.css' // Asegúrate de que este archivo es el correcto
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import ItemsPage from './pages/ItemsPage';
 
 function App() {
     return (
-        <div className="App">
-            <h1>Lista de items</h1>
-            <ItemList />
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/items" element={<ItemsPage />} />
+            </Routes>
+        </Router>
     );
 }
 
