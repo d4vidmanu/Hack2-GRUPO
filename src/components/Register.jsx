@@ -6,7 +6,7 @@ const Register = () => {
     const [formData, setFormData] = useState({
         username: '',
         password: '',
-        role: false
+        role: 'cliente' // Default role to 'cliente' if not specified
     });
 
     const [error, setError] = useState(null);
@@ -24,20 +24,29 @@ const Register = () => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
-            [name]: value === 'true'
+            [name]: value
         });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         try {
-            await fetchRegister(formData);
-            alert('Registro exitoso');
-            navigate('/products');
+            const response = await fetchRegister(formData);
+            localStorage.setItem('token', response.token);
+
+            // Redirigir según el rol
+            if (formData.role === 'admin') {
+                navigate('/admin');
+            } else if (formData.role === 'cliente') {
+                navigate('/products');
+            }
+
+            console.log(response.token);
         } catch (error) {
             setError(error.message);
         }
-    };
+    }
 
     return (
         <section>
@@ -82,8 +91,8 @@ const Register = () => {
                             id="admin"
                             name="role"
                             type="radio"
-                            value="true"
-                            checked={formData.role === true}
+                            value="admin"
+                            checked={formData.role === 'admin'}
                             onChange={handleRadioChange}
                             className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300"
                         />
@@ -94,8 +103,8 @@ const Register = () => {
                             id="client"
                             name="role"
                             type="radio"
-                            value="false"
-                            checked={formData.role === false}
+                            value="cliente"
+                            checked={formData.role === 'cliente'}
                             onChange={handleRadioChange}
                             className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 ml-6"
                         />
